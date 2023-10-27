@@ -11,23 +11,18 @@ class Table:
         self.philosophers = list(philosophers)
         self.initial_earters_quantity = initial_earters_quantity
 
-    def add_philosophy(self, philosophy):
-        self.philosophers.append(philosophy)
-
-    def remove_philosophy(self, philosophy):
-        self.philosophers.remove(philosophy)
-
     def run_table(self):
-        awaiter_quantity = len(self.philosophers) - self.initial_earters_quantity
-        awaiters = list()
+        thinkers_quantity = len(self.philosophers) - self.initial_earters_quantity
+        thinkers = list()
         eaters = []
-        self.fill_list(awaiter_quantity, awaiters)
+        self.fill_list(thinkers_quantity, thinkers)
         self.fill_list(self.initial_earters_quantity, eaters)
-
-        for i in range(len(eaters)):
-            eaters[i].attach_observer(awaiters.pop())
-
+        self.attach_all_observers(thinkers, eaters)
         self.wake_up_all_eaters(eaters)
+
+    def attach_all_observers(self, thinkers, eaters):
+        for i in range(len(eaters)):
+            eaters[i].attach_observer(thinkers.pop())
 
     def wake_up_all_eaters(self, eaters):
         for current_eater in eaters:
